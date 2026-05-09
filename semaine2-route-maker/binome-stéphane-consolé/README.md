@@ -12,7 +12,7 @@ Du 5 mai au 9 mai 2026
 
 ---
 
-## 📋 Description du fonctionnement
+##  Description du fonctionnement
 
 Ce projet est une **mini station de surveillance automatisée** construite sur Arduino Uno. Le système surveille en continu deux capteurs (lumière et vibrations) et réagit automatiquement selon les conditions détectées.
 
@@ -57,10 +57,131 @@ Ce projet est une **mini station de surveillance automatisée** construite sur A
 | Câble USB | 1 | — |
 
 ---
+# Step 1 — Lire le capteur LDR
+
+---
+
+## C'est quoi un LDR ?
+
+Un **LDR** (Light Dependent Resistor) est une résistance qui change de valeur selon la lumière :
+
+| Condition | Résistance |
+|-----------|-----------|
+| Pleine lumière | ~100 Ω (très faible) |
+| Obscurité totale | ~1 000 000 Ω (très élevée) |
+
+Mais l'Arduino ne peut pas mesurer une résistance directement. Il mesure une **tension** (en volts).  
+C'est pour ça qu'on a besoin d'un montage spécial : le **diviseur de tension**.
+
+---
+
+## Le circuit — Diviseur de tension
+
+```
+5V ──────────── LDR ──────────── Point A ──────────── GND
+                                     │
+                                  Résistance 10kΩ
+                                     │
+                                    A0 (Arduino)
+```
+
+**Comment ça marche :**
+
+- Lumière présente → LDR peu résistant → tension au point A **haute** → Arduino lit **proche de 1023**
+- Obscurité → LDR très résistant → tension au point A **basse** → Arduino lit **proche de 0**
+
+---
+
+## Le câblage physique
+
+| # | De | Vers |
+|---|----|------|
+| 1 | Patte gauche du LDR | 5V de l'Arduino |
+| 2 | Patte droite du LDR | Point A sur la breadboard |
+| 3 | Point A | Broche **A0** de l'Arduino |
+| 4 | Point A | Résistance 10 kΩ |
+| 5 | Autre côté résistance 10 kΩ | GND de l'Arduino |
+
+---
+
+## Le code expliqué ligne par ligne
+
+```cpp
+const int PIN_LDR = A0;
+```
+On dit à Arduino que le LDR est branché sur la pin A0.  
+`const` signifie que cette valeur ne changera jamais pendant le programme.
+
+---
+
+```cpp
+Serial.begin(9600);
+```
+On démarre la communication entre l'Arduino et ton PC à 9600 bits/seconde.  
+Sans ça, tu ne verras rien dans le Serial Monitor.
+
+---
+
+```cpp
+int lightValue = analogRead(PIN_LDR);
+```
+`analogRead()` lit la tension sur la pin A0 et la convertit en nombre entier entre **0 et 1023** :
+
+| Valeur lue | Tension | Signification |
+|-----------|---------|--------------|
+| 0 | 0V | Obscurité totale |
+| 512 | 2.5V | Lumière moyenne |
+| 1023 | 5V | Lumière maximale |
+
+---
+
+```cpp
+Serial.print("Light value: ");
+Serial.println(lightValue);
+```
+Affiche la valeur dans le **Serial Monitor** (Outils → Moniteur Série dans Arduino IDE).  
+- `print` → affiche sans retour à la ligne  
+- `println` → affiche avec retour à la ligne
+
+---
+
+```cpp
+delay(300);
+```
+Attend 300 millisecondes avant la prochaine lecture.  
+Sans ce délai, les valeurs défilent trop vite pour être lisibles.
+
+---
+
+## Comment tester
+
+1. Upload le code sur l'Arduino
+2. Ouvre **Outils → Moniteur Série** (ou `Ctrl + Shift + M`)
+3. Sélectionne **9600 baud** en bas à droite
+4. Les valeurs s'affichent en temps réel
+
+| Action | Valeur attendue |
+|--------|----------------|
+| Lumière normale de la pièce | 600 — 900 |
+| Couvrir le LDR avec ta main | 100 — 300 |
+| Lampe de téléphone dessus | 950 — 1023 |
+
+---
+
+## Ce que tu dois retenir pour la démo orale
+
+> *"On utilise `analogRead()` et non `digitalRead()` parce que le LDR produit une tension variable entre 0 et 5V. `digitalRead()` ne donnerait que HIGH ou LOW — on perdrait toute l'information sur l'intensité lumineuse."*
+
+C'est exactement le genre d'explication qui rapporte les points de commentaires au barème.
+
+---
+
+*PÔLE ROS — FIERI | Semaine 2 | Mai 2026*
+
 
 ##  Composants substitués
 
-*(Remplir cette section uniquement si un composant a été substitué.)*
+
 
 > Exemple :  
 > **Servomoteur SG90** remplacé par **servomoteur MG90S** — moteur équivalent avec
