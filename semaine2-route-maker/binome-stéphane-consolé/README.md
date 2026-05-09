@@ -7,8 +7,8 @@ Du 5 mai au 9 mai 2026
 ##  Membres du binôme
 | Nom | GitHub |
 |-----|--------|
-| [PRENOM NOM 1] | [@username1] |
-| [PRENOM NOM 2] | [@username2] |
+| [Consolé AGOSSOU ] | [consoleagossou] |
+| [Stéphane AVOCEVOU ] | [StephaneMAS] |
 
 ---
 
