@@ -1,10 +1,10 @@
-// ================================================================
+
 // STEP 5 — Add the servo motor + clean state management
 // Goal: complete the mandatory project requirements.
 //       Servo rotates to 90° on alert, returns on reset.
 // New concept: Servo library, inAlert flag to avoid jitter.
 // This step = 20/20 on the base score if well documented.
-// ================================================================
+
 
 #include <Servo.h>
 
