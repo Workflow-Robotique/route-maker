@@ -1,9 +1,9 @@
-// ================================================================
+
 // STEP 2 — LDR + RGB LED (green = normal, red = alert)
 // Goal: make the LED react to light with a fixed threshold.
 // New concept: analogWrite() for PWM color control on RGB LED.
 // Test: cover LDR → LED turns red. Uncover → LED turns green.
-// ================================================================
+
 
 const int PIN_LDR   = A0;
 
