@@ -1,4 +1,4 @@
-// ================================================================
+
 // STEP 7 — BONUS 2 : Capteur ultrason HC-SR04
 // Objectif : détecter un intrus qui s'approche à moins de 50 cm.
 // Le capteur envoie une impulsion ultrasonore et mesure le temps
@@ -6,7 +6,7 @@
 // Nouveau : pulseIn(), calcul de distance avec la vitesse du son.
 // Broches : TRIG → pin 3, ECHO → pin 5 (imposées par le règlement).
 // Test : approcher la main devant le capteur → alerte.
-// ================================================================
+
 
 #include <Servo.h>
 
@@ -89,7 +89,6 @@ void loop() {
   delay(100);
 }
 
-// ================================================================
 // FONCTION : Mesurer la distance avec le HC-SR04
 // Principe :
 //   1. Envoyer une impulsion TRIG de 10 microsecondes
@@ -98,7 +97,7 @@ void loop() {
 //   4. Distance = (durée × vitesse du son) ÷ 2
 //      La vitesse du son est 0.034 cm/µs.
 //      On divise par 2 car le son fait l'aller ET le retour.
-// ================================================================
+
 long lireDistance() {
   // S'assurer que TRIG est bas avant de déclencher
   digitalWrite(PIN_TRIG, LOW);
