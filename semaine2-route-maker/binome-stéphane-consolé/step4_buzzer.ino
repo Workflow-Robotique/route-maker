@@ -1,9 +1,9 @@
-// ================================================================
+
 // STEP 4 — Add the buzzer alarm
 // Goal: trigger an audible alarm when alert condition is met.
 // New concept: tone() / noTone() to generate sound on a pin.
 // Test: cover LDR → LED turns red AND buzzer sounds.
-// ================================================================
+
 
 const int PIN_LDR    = A0;
 const int PIN_POT    = A1;
